@@ -3,10 +3,11 @@ import cx from 'classnames'
 import { BiUpArrow, BiDownArrow, BiLeftArrow, BiRightArrow } from 'react-icons/bi'
 
 import { CANVAS_SIZE, LETTERS, COLOR_MAPPING, COLUMNS, ROWS, NEW_VALUE_POOL, INITIAL_STATE, FILLABLE_CELLS, DIRECTION } from '../utils/constants'
-import { getTroubleSet } from '../utils/trouble'
+import { createTroubleSet, LEVEL } from '../utils/trouble'
 
 function HomePage () {
   const [cellValues, setCellValues] = useState(INITIAL_STATE)
+  const [showLevelButtons, setShowLevelButtons] = useState(false)
   const [gameOn, setGameOn] = useState(false)
   const [addNew, setAddNew] = useState(false)
   const canvasRef = useRef(null)
@@ -75,10 +76,11 @@ function HomePage () {
     setGameOn(true)
   }
 
-  const startTrouble = () => {
+  const startTrouble = (level) => {
     if (gameOn) return
+    setShowLevelButtons(false)
 
-    setCellValues(getTroubleSet())
+    setCellValues(createTroubleSet(level))
     setGameOn(true)
   }
 
@@ -317,7 +319,7 @@ function HomePage () {
   const renderButtons = () => {
     return (
       <div className=" w-full md:w-1/2 flex flex-col justify-center md:justify-end p-4 md:p-6">
-        <div className='self-center md:self-start py-4'>
+        <div className='self-center md:self-start pb-4'>
           <div className='flex justify-center'>
             <BiLeftArrow onClick={() => moveWithArrows(DIRECTION.left)} className="text-6xl self-center text-blueGray-600" />
 
@@ -333,15 +335,25 @@ function HomePage () {
           <div className='flex flex-end justify-center'>
             <button
               onClick={startGame}
-              className="inline-flex justify-center mt-4 mr-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none">
+              disabled={gameOn}
+              className={cx({ 'cursor-not-allowed bg-blueGray-400': gameOn, 'bg-blueGray-600 hover:bg-blueGray-600': !gameOn }, "inline-flex justify-center mt-4 mr-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white outline-none")}>
               Start
           </button>
-            <button
-              onClick={startTrouble}
-              className="inline-flex justify-center mt-4 mr-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none"
-            >
-              Trouble
+            <div className="relative mr-4">
+              <button
+                disabled={gameOn}
+                onClick={() => { setShowLevelButtons(true) }}
+                className={cx({ 'cursor-not-allowed bg-blueGray-400': gameOn, 'bg-blueGray-600 hover:bg-blueGray-600': !gameOn }, "inline-flex justify-center mt-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white outline-none")}
+              >
+                Trouble
           </button>
+              {showLevelButtons &&
+                <div className="origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <button onClick={() => startTrouble(LEVEL.easy)} className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Easy</button>
+                  <button onClick={() => startTrouble(LEVEL.medium)} className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Medium</button>
+                  <button onClick={() => startTrouble(LEVEL.hard)} className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Hard</button>
+                </div>}
+            </div>
             <button
               onClick={resetGame}
               className="inline-flex justify-center mt-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none"
