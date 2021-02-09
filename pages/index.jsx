@@ -291,74 +291,73 @@ function HomePage () {
 
   const renderCanvas = () => {
     return (
-      <div
-        className="border-warm-200 border-4"
-        style={{ width: '16rem' }}
-        ref={canvasRef}
-      >
-        {Array.from({ length: CANVAS_SIZE }).map((item, i) => (
-          <div key={i} className={cx({ 'border-b-4 border-warm-200': i < CANVAS_SIZE - 1 }, 'flex flex-row')}>
-            {Array.from({ length: CANVAS_SIZE }).map((cell, j) => {
-              const index = LETTERS[i] + (j + 1)
-              return (
-                <div
-                  className={cx('w-16 h-16 bg-white flex box-content', COLOR_MAPPING[cellValues[index]], {
-                    'border-r-4 border-warm-200': j < CANVAS_SIZE - 1,
-                  })}
-                  key={j}
-                >
-                  <span className="font-bold w-full self-center text-center">{cellValues[index] || ''}</span>
-                </div>
-              )
-            })}
-          </div>
-        ))}
+      <div className="w-full md:w-1/2 flex justify-center md:justify-end p-4 md:p-6">
+        <div className='border-warm-200 border-4' ref={canvasRef} style={{ width: '16rem' }}>
+          {Array.from({ length: CANVAS_SIZE }).map((item, i) => (
+            <div key={i} className={cx({ 'border-b-4 border-warm-200': i < CANVAS_SIZE - 1 }, 'flex flex-row')}>
+              {Array.from({ length: CANVAS_SIZE }).map((cell, j) => {
+                const index = LETTERS[i] + (j + 1)
+                return (
+                  <div
+                    className={cx('w-16 h-16 bg-white flex box-content', COLOR_MAPPING[cellValues[index]], {
+                      'border-r-4 border-warm-200': j < CANVAS_SIZE - 1,
+                    })}
+                    key={j}
+                  >
+                    <span className="font-bold w-full self-center text-center">{cellValues[index] || ''}</span>
+                  </div>
+                )
+              })}
+            </div>
+          ))}</div>
       </div>
     )
   }
 
   const renderButtons = () => {
     return (
-      <div className='p-4 md:px-6 self-end'>
-        <div className='flex justify-center'>
+      <div className=" w-full md:w-1/2 flex flex-col justify-center md:justify-end p-4 md:p-6">
+        <div className='self-center md:self-start py-4'>
+          <div className='flex justify-center'>
+            <BiLeftArrow onClick={() => moveWithArrows(DIRECTION.left)} className="text-6xl self-center text-blueGray-600" />
 
-          <BiLeftArrow onClick={() => moveWithArrows(DIRECTION.left)} className="text-6xl self-center text-blueGray-600" />
+            <div className='flex flex-col'>
+              <BiUpArrow onClick={() => moveWithArrows(DIRECTION.up)} className="text-6xl text-blueGray-600" />
 
-          <div className='flex flex-col'>
-            <BiUpArrow onClick={() => moveWithArrows(DIRECTION.up)} className="text-6xl text-blueGray-600" />
+              <BiDownArrow onClick={() => moveWithArrows(DIRECTION.down)} className="text-6xl text-blueGray-600" />
+            </div>
 
-            <BiDownArrow onClick={() => moveWithArrows(DIRECTION.down)} className="text-6xl text-blueGray-600" />
+            <BiRightArrow onClick={() => moveWithArrows(DIRECTION.right)} className="text-6xl self-center text-blueGray-600" />
           </div>
 
-          <BiRightArrow onClick={() => moveWithArrows(DIRECTION.right)} className="text-6xl self-center text-blueGray-600" />
-        </div>
-        <div className='flex flex-end justify-center'>
-          <button
-            onClick={startGame}
-            className="inline-flex justify-center mt-4 mr-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none">
-            Start
+          <div className='flex flex-end justify-center'>
+            <button
+              onClick={startGame}
+              className="inline-flex justify-center mt-4 mr-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none">
+              Start
           </button>
-          <button
-            onClick={startTrouble}
-            className="inline-flex justify-center mt-4 mr-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none"
-          >
-            Trouble
+            <button
+              onClick={startTrouble}
+              className="inline-flex justify-center mt-4 mr-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none"
+            >
+              Trouble
           </button>
-          <button
-            onClick={resetGame}
-            className="inline-flex justify-center mt-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none"
-          >
-            Reset
+            <button
+              onClick={resetGame}
+              className="inline-flex justify-center mt-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blueGray-600 hover:bg-blueGray-600 outline-none"
+            >
+              Reset
           </button>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="p-4 lg:p-20 bg-warm-50 w-full h-screen" onCopy={() => { return false }}>
-      <h1 className='text-center font-bold mb-8 text-6xl text-blueGray-700 flex justify-center'> 2048 TR<img className='w-12 h-12 self-center' src='trouble.png' alt='' />UBLE</h1>
-      <div className="flex justify-center">
+    <div className="px-4 md:px-6 py-12 lg:p-20 bg-warm-50 w-full h-screen" onCopy={() => { return false }}>
+      <h1 className='text-center font-bold mb-8 text-2xl md:text-4xl lg:text-6xl text-blueGray-700 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble.png' alt='' />UBLE</h1>
+      <div className="flex flex-col md:flex-row justify-center">
         {renderCanvas()}
         {renderButtons()}
       </div>
