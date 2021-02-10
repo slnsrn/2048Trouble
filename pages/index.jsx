@@ -26,8 +26,8 @@ function HomePage () {
 
   const renderCanvas = () => {
     return (
-      <div className="w-full md:w-1/2 flex justify-center md:justify-end p-4 md:p-6">
-        <div className='border-warm-200 border-4 self-end' ref={canvasRef} style={{ width: '16rem' }}>
+      <div className="w-full md:w-1/2 flex justify-center md:justify-end p-4 md:p-6" ref={canvasRef}>
+        <div className='border-warm-200 border-4 self-end' style={{ width: '16rem' }}>
           {Array.from({ length: CANVAS_SIZE }).map((item, i) => (
             <div key={i} className={cx({ 'border-b-4 border-warm-200': i < CANVAS_SIZE - 1 }, 'flex flex-row')}>
               {Array.from({ length: CANVAS_SIZE }).map((cell, j) => {
@@ -59,7 +59,7 @@ function HomePage () {
           </div>
 
           <div className='flex flex-col flex-end justify-center'>
-            <Button label='Start Normal' onClick={() => startGame()} disabled={gameOn} className='mb-4'/>
+            <Button label='Start Normal' onClick={() => startGame()} disabled={gameOn} className='mb-4' />
 
             <div className="relative mb-4">
               <Button label='Start With Trouble' onClick={() => { setShowLevelButtons(true) }} disabled={gameOn} />
