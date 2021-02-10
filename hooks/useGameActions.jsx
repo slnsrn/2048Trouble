@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { CANVAS_SIZE, COLUMNS, ROWS, NEW_VALUE_POOL, INITIAL_STATE, FILLABLE_CELLS, DIRECTION } from '../utils/constants'
 import { createGameSet, } from '../utils/trouble'
 
@@ -8,6 +8,8 @@ export default function useGameActions () {
   const [gameOver, setGameOver] = useState(false)
   const [addNew, setAddNew] = useState(false)
   const [gameLevel, setGameLevel] = useState(undefined)
+  const [panning, setPanning] = useState(false)
+  const canvasRef = useRef(null)
 
   useEffect(() => {
     if (addNew) {
@@ -56,12 +58,55 @@ export default function useGameActions () {
 
   }
 
-  useEffect(() => {
-    if (document) {
-      document.addEventListener('keyup', moveOnKeyPressed)
-      return () => document.removeEventListener('keyup', moveOnKeyPressed)
+  const preventTouchmoveWhenPanning = (e) => {
+    if (panning) {
+      e.preventDefault();
     }
+  };
+
+  const onTouchStart = (e) => {
+    if (!gameOn) return
+
+    setPanning(true)
+    canvasRef.current.position = { startX: e.pageX, startY: e.pageY }
+  }
+
+  const onTouchEnd = (e) => {
+    if (!gameOn) return
+
+    setPanning(false)
+    const direction = getTouchDirection(e.pageX, e.pageY)
+    handleMove(direction)
+  }
+
+  useEffect(() => {
+    document?.addEventListener('keyup', moveOnKeyPressed)
+    return () => document?.removeEventListener('keyup', moveOnKeyPressed)
   }, [moveOnKeyPressed])
+
+  useEffect(() => {
+    document?.body?.addEventListener('touchmove', preventTouchmoveWhenPanning, {
+      passive: false
+    });
+    return () => document?.body?.removeEventListener('touchmove', preventTouchmoveWhenPanning, {
+      passive: false
+    });
+  }, [preventTouchmoveWhenPanning])
+
+  useEffect(() => {
+    if (canvasRef.current === null) return
+
+    if (canvasRef.current) {
+      canvasRef.current.addEventListener('touchstart', onTouchStart)
+      canvasRef.current.addEventListener('touchend', onTouchEnd)
+    }
+    return () => {
+      if (canvasRef.current) {
+        canvasRef.current.removeEventListener('touchstart', onTouchStart)
+        canvasRef.current.removeEventListener('touchend', onTouchEnd)
+      }
+    }
+  }, [canvasRef, onTouchStart, onTouchEnd])
 
   const startGame = (level = undefined) => {
     if (gameOn) return
@@ -91,24 +136,27 @@ export default function useGameActions () {
     setGameOver(false)
   }
 
-  // const setMouseStart = (e) => {
-  //   if (!gameOn) return
+  const getTouchDirection = (endX, endY) => {
+    const { startX, startY } = canvasRef.current.position
+    const diffY = Math.abs(startY - endY)
+    const diffX = Math.abs(startX - endX)
 
-  //   canvasRef.current.position = { startX: e.pageX, startY: e.pageY }
-  // }
-
-  const moveWithArrows = (direction) => {
-    if (!gameOn) return
-
-    handleMove(direction)
+    if (diffY > diffX) {
+      //moves in vertical
+      if (endY < startY) {
+        return DIRECTION.up
+      } else {
+        return DIRECTION.down
+      }
+    } else {
+      //moves horizontal
+      if (endX < startX) {
+        return DIRECTION.left
+      } else {
+        return DIRECTION.right
+      }
+    }
   }
-
-  // const moveWithMouse = (e) => {
-  //   if (!gameOn) return
-
-  //   const direction = getMouseDirection(e.pageX, e.pageY)
-  //   handleMove(direction)
-  // }
 
   const isGameOver = () => {
     if (Object.keys(gameState).some(cell => !gameState[cell])) {
@@ -123,28 +171,6 @@ export default function useGameActions () {
 
     return !COLUMNS.some((column) => column.some((cell, i) => gameState[cell] === gameState[column[i + 1]]))
   }
-
-  // const getMouseDirection = (endX, endY) => {
-  //   const { startX, startY } = canvasRef.current.position
-  //   const diffY = Math.abs(startY - endY)
-  //   const diffX = Math.abs(startX - endY)
-
-  //   if (diffY > diffX) {
-  //     //moves in vertical
-  //     if (endY < startY) {
-  //       return DIRECTION.up
-  //     } else {
-  //       return DIRECTION.down
-  //     }
-  //   } else {
-  //     //moves horizontal
-  //     if (endX < startX) {
-  //       return DIRECTION.left
-  //     } else {
-  //       return DIRECTION.right
-  //     }
-  //   }
-  // }
 
   const moveRight = () => {
     const updatedCells = {}
@@ -307,6 +333,6 @@ export default function useGameActions () {
     }
   }
 
-  return { gameState, moveWithArrows, gameOn, startGame, gameOver, setGameOver, resetGame }
+  return { gameState, gameOn, startGame, gameOver, setGameOver, resetGame, canvasRef }
 
 }

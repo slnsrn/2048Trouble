@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import cx from 'classnames'
 import { BiUpArrow, BiDownArrow, BiLeftArrow, BiRightArrow } from 'react-icons/bi'
 
@@ -13,15 +13,14 @@ import { ResetConfirmationModal } from '../components/ResetConfirmationModal'
 function HomePage () {
   const [showLevelButtons, setShowLevelButtons] = useState(false)
   const [showResetConfirmation, setShowResetConfirmation] = useState(false)
-  const canvasRef = useRef(null)
-  const { gameState, moveWithArrows, gameOn, startGame, resetGame, gameOver } = useGameActions()
+  const { gameState, moveWithArrows, gameOn, startGame, resetGame, gameOver, canvasRef } = useGameActions()
 
   const handleLevelSelection = (level) => {
     startGame(level)
     setShowLevelButtons(false)
   }
 
-  const handleReset = (level) => {
+  const handleReset = () => {
     setShowResetConfirmation(false)
     resetGame()
   }
@@ -55,22 +54,15 @@ function HomePage () {
     return (
       <div className=" w-full md:w-1/2 flex flex-col justify-center md:justify-end p-4 md:p-6">
         <div className='self-center md:self-start'>
-          <div className='flex justify-center'>
-            <BiLeftArrow onClick={() => moveWithArrows(DIRECTION.left)} className="text-6xl self-center text-blueGray-600" />
-
-            <div className='flex flex-col'>
-              <BiUpArrow onClick={() => moveWithArrows(DIRECTION.up)} className="text-6xl text-blueGray-600" />
-
-              <BiDownArrow onClick={() => moveWithArrows(DIRECTION.down)} className="text-6xl text-blueGray-600" />
-            </div>
-
-            <BiRightArrow onClick={() => moveWithArrows(DIRECTION.right)} className="text-6xl self-center text-blueGray-600" />
+          <div className='hidden lg:flex lg:flex-col justify-center mb-4 items-center'>
+            <img className='w-32' src='navigation.png' alt='use arrow keys to play' />
+            <span className='italic text-xs text-gray-700 mt-'>Use arrow keys to play</span>
           </div>
 
           <div className='flex flex-col flex-end justify-center'>
-            <Button label='Start Normal' onClick={() => startGame()} disabled={gameOn} />
+            <Button label='Start Normal' onClick={() => startGame()} disabled={gameOn} className='mb-4'/>
 
-            <div className="relative">
+            <div className="relative mb-4">
               <Button label='Start With Trouble' onClick={() => { setShowLevelButtons(true) }} disabled={gameOn} />
 
               {showLevelButtons &&
@@ -88,8 +80,8 @@ function HomePage () {
   }
 
   return (
-    <div className="px-4 md:px-6 py-12 lg:p-20 bg-warm-50 w-full h-screen" onCopy={() => { return false }}>
-      <h1 className='text-center font-bold mb-8 text-2xl md:text-4xl lg:text-6xl text-blueGray-700 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble.png' alt='' />UBLE</h1>
+    <div className="px-4 md:px-6 py-8 md:p-20 bg-warm-50 w-full h-screen">
+      <h1 className='text-center font-bold text-3xl md:text-4xl lg:text-6xl text-blueGray-700 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 mx-1 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble.png' alt='' />UBLE</h1>
       <div className="flex flex-col md:flex-row justify-center">
         {renderCanvas()}
         {renderButtons()}

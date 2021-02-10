@@ -11,13 +11,13 @@ export const GameOverModal = withOverlay(({ onConfirm, onCancel }) => {
             <img src='trouble.png' alt='' />
           </div>
           <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left self-center ">
-            <h3 className="text-lg leading-6 text-2xl font-medium text-gray-900" id="modal-headline">
+            <h3 className="text-xl font-medium text-gray-900" id="modal-headline">
               Game is over!
             </h3>
           </div>
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-center md:justify-end">
         <Button onClick={onCancel} label='Reset' className='mr-4' />
         <Button onClick={onConfirm} label='Start over' />
       </div>
