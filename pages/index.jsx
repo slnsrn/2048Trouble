@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import cx from 'classnames'
-import { BiUpArrow, BiDownArrow, BiLeftArrow, BiRightArrow } from 'react-icons/bi'
 
-import { CANVAS_SIZE, LETTERS, COLOR_MAPPING, DIRECTION } from '../utils/constants'
+import { CANVAS_SIZE, LETTERS, COLOR_MAPPING } from '../utils/constants'
 import { LEVEL } from '../utils/trouble'
 import useGameActions from '../hooks/useGameActions'
 import Button from '../components/Button'
@@ -13,7 +12,7 @@ import { ResetConfirmationModal } from '../components/ResetConfirmationModal'
 function HomePage () {
   const [showLevelButtons, setShowLevelButtons] = useState(false)
   const [showResetConfirmation, setShowResetConfirmation] = useState(false)
-  const { gameState, moveWithArrows, gameOn, startGame, resetGame, gameOver, canvasRef } = useGameActions()
+  const { gameState, gameOn, startGame, resetGame, gameOver, canvasRef } = useGameActions()
 
   const handleLevelSelection = (level) => {
     startGame(level)
