@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react'
 import { CANVAS_SIZE, COLUMNS, ROWS, NEW_VALUE_POOL, INITIAL_STATE, FILLABLE_CELLS, DIRECTION } from '../utils/constants'
-import { createTroubleSet, } from '../utils/trouble'
+import { createGameSet, } from '../utils/trouble'
 
 export default function useGameActions () {
   const [gameState, setGameState] = useState(INITIAL_STATE)
   const [gameOn, setGameOn] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [addNew, setAddNew] = useState(false)
+  const [gameLevel, setGameLevel] = useState(undefined)
 
   useEffect(() => {
     if (addNew) {
       setGameState({ ...gameState, ...getRandomCell() })
       setAddNew(false)
     }
-    
+
     if (isGameOver()) {
-      setTimeout(() => { setGameOver(true) }, 500)
+      setTimeout(() => {
+        setGameOver(true)
+        setGameOn(false)
+      }, 500)
     }
 
   }, [addNew])
@@ -59,22 +63,25 @@ export default function useGameActions () {
     }
   }, [moveOnKeyPressed])
 
-  const startGame = () => {
+  const startGame = (level = undefined) => {
     if (gameOn) return
 
     resetGame()
 
-    const cell1 = getRandomCell()
-    const cell2 = getRandomCell()
+    if (level) {
+      if (level === 'current') {
+        setGameState(createGameSet(gameLevel))
+      } else {
+        setGameLevel(level)
+        setGameState(createGameSet(level))
+      }
+    } else {
+      const cell1 = getRandomCell()
+      const cell2 = getRandomCell()
 
-    setGameState({ ...gameState, ...cell1, ...cell2 })
-    setGameOn(true)
-  }
+      setGameState({ ...gameState, ...cell1, ...cell2 })
+    }
 
-  const startTrouble = (level) => {
-    if (gameOn) return
-
-    setGameState(createTroubleSet(level))
     setGameOn(true)
   }
 
@@ -300,6 +307,6 @@ export default function useGameActions () {
     }
   }
 
-  return { gameState, moveWithArrows, gameOn, startGame, startTrouble, gameOver, setGameOver, resetGame }
+  return { gameState, moveWithArrows, gameOn, startGame, gameOver, setGameOver, resetGame }
 
 }

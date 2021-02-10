@@ -11,8 +11,6 @@ export const withOverlay = Component => ({ ...props }) => {
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
 
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
         <Component {...props} />
 
       </div>

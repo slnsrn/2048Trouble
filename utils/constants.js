@@ -20,6 +20,7 @@ export const INITIAL_STATE = {
 }
 
 export const LETTERS = ['a', 'b', 'c', 'd']
+
 export const FILLABLE_CELLS = ['a1', 'a2', 'a3', 'a4', 'b1', 'b4', 'c1', 'c4', 'd1', 'd2', 'd3', 'd4']
 
 export const ROWS = [
@@ -61,4 +62,3 @@ export const DIRECTION = {
   up: 'up',
   down: 'down',
 }
-
