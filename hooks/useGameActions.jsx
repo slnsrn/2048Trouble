@@ -150,7 +150,7 @@ export default function useGameActions () {
     const diffY = Math.abs(startY - endY)
     const diffX = Math.abs(startX - endX)
 
-    if (diffX < 5 && diffY < 5) return
+    // if (diffX < 5 && diffY < 5) return
 
     if (diffY > diffX) {
       //moves in vertical
