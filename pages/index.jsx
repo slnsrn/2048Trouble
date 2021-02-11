@@ -36,7 +36,7 @@ function HomePage ({ isMobile }) {
                 const index = LETTERS[i] + (j + 1)
                 return (
                   <div
-                    className={cx('transition duration-25c0 w-16 h-16 bg-white flex box-content', COLOR_MAPPING[gameState[index]], {
+                    className={cx('transition duration-250 w-16 h-16 bg-white flex box-content', COLOR_MAPPING[gameState[index]], {
                       'border-r-4 border-warm-200': j < CANVAS_SIZE - 1,
                     })}
                     key={j}
