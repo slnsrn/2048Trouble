@@ -1,5 +1,5 @@
 {
-  "name": "quutla",
+  "name": "2048Trouble",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,8 +8,11 @@
     "build": "next build",
     "start": "next start"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "game",
+    "2048"
+  ],
+  "author": "slnsrn@gmail.com",
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "^10.2.4",
