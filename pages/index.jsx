@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types';
 import cx from 'classnames'
 
 import { CANVAS_SIZE, LETTERS, COLOR_MAPPING } from '../utils/constants'
@@ -7,12 +8,13 @@ import useGameActions from '../hooks/useGameActions'
 import Button from '../components/Button'
 import { GameOverModal } from '../components/GameOverModal'
 import { ResetConfirmationModal } from '../components/ResetConfirmationModal'
+import { SelectLevelModal } from '../components/SelectLevelModal'
 
 
-function HomePage () {
+function HomePage ({ isMobile }) {
   const [showLevelButtons, setShowLevelButtons] = useState(false)
   const [showResetConfirmation, setShowResetConfirmation] = useState(false)
-  const { gameState, gameOn, startGame, resetGame, gameOver, canvasRef } = useGameActions()
+  const { gameState, gameOn, startGame, resetGame, gameOver, canvasRef, score } = useGameActions()
 
   const handleLevelSelection = (level) => {
     startGame(level)
@@ -34,7 +36,7 @@ function HomePage () {
                 const index = LETTERS[i] + (j + 1)
                 return (
                   <div
-                    className={cx('w-16 h-16 bg-white flex box-content', COLOR_MAPPING[gameState[index]], {
+                    className={cx('transition duration-25c0 w-16 h-16 bg-white flex box-content', COLOR_MAPPING[gameState[index]], {
                       'border-r-4 border-warm-200': j < CANVAS_SIZE - 1,
                     })}
                     key={j}
@@ -53,18 +55,23 @@ function HomePage () {
     return (
       <div className=" w-full md:w-1/2 flex flex-col justify-center md:justify-end p-4 md:p-6">
         <div className='self-center md:self-start'>
-          <div className='hidden lg:flex lg:flex-col justify-center mb-4 items-center'>
-            <img className='w-32' src='navigation.png' alt='use arrow keys to play' />
-            <span className='italic text-xs text-gray-700 mt-'>Use arrow keys to play</span>
-          </div>
+
+          {gameOn && <div className='text-blueGray-600 text-4xl leading-normal font-bold text-center mb-2 md:mb-4'>{score}</div>}
+
+          {!gameOn &&
+            <div className='hidden lg:flex lg:flex-col justify-center mb-4 items-center'>
+              <img className='w-24' src='navigation.png' alt='use arrow keys to play' />
+              <span className='italic text-xs text-gray-700'>Use arrow keys to play</span>
+            </div>
+          }
 
           <div className='flex flex-col flex-end justify-center'>
             <Button label='Start Normal' onClick={() => startGame()} disabled={gameOn} className='mb-4' />
 
             <div className="relative mb-4">
               <Button label='Start With Trouble' onClick={() => { setShowLevelButtons(true) }} disabled={gameOn} />
-
-              {showLevelButtons &&
+              {showLevelButtons && isMobile && <SelectLevelModal onConfirm={handleLevelSelection} />}
+              {showLevelButtons && !isMobile &&
                 <div className="origin-top-right absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                   <button onClick={() => handleLevelSelection(LEVEL.easy)} className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 font-bold" role="menuitem">Easy</button>
                   <button onClick={() => handleLevelSelection(LEVEL.medium)} className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 font-bold" role="menuitem">Medium</button>
@@ -80,7 +87,7 @@ function HomePage () {
 
   return (
     <div className="px-4 md:px-6 py-8 md:p-20 bg-warm-50 w-full h-screen">
-      <h1 className='text-center font-bold text-3xl md:text-4xl lg:text-6xl text-blueGray-700 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 mx-1 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble.png' alt='' />UBLE</h1>
+      <h1 className='text-center font-bold text-3xl md:text-4xl lg:text-6xl text-blueGray-700 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 mr-1 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble.png' alt='' />UBLE</h1>
       <div className="flex flex-col md:flex-row justify-center">
         {renderCanvas()}
         {renderButtons()}
@@ -90,5 +97,21 @@ function HomePage () {
     </div >
   )
 }
+export async function getServerSideProps (context) {
+  const UA = context.req.headers['user-agent'];
+  const isMobile = Boolean(UA.match(
+    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+  ))
+
+  return {
+    props: { isMobile }
+  }
+}
+
+HomePage.propTypes = {
+  isMobile: PropTypes.bool
+}
+
 
 export default HomePage
+

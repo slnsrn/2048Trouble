@@ -37,7 +37,7 @@ export const COLUMNS = [
   ['a4', 'b4', 'c4', 'd4'],
 ]
 
-export const NEW_VALUE_POOL = [...Array.from({ length: 92 }, () => 2), ...Array.from({ length: 8 }, () => 4)]
+export const NEW_VALUE_POOL = [...Array.from({ length: 85 }, () => 2), ...Array.from({ length: 15 }, () => 4)]
 
 export const COLOR_MAPPING = {
   2: 'bg-amber-50 text-2xl text-coolGray-600',
@@ -50,9 +50,9 @@ export const COLOR_MAPPING = {
   256: 'bg-orange-700 text-2xl text-white',
   512: 'bg-rose-500 text-2xl text-white',
   1024: 'bg-rose-600 text-xl text-white',
-  2048: 'bg-rose-700 text-xl text-white',
-  4096: 'bg-pink-800 text-xl text-white',
-  8192: 'bg-teal-500 text-xl text-white',
+  2048: 'bg-pink-700 text-xl text-white',
+  4096: 'bg-teal-500 text-xl text-white',
+  8192: 'bg-teal-800 text-xl text-white',
   16384: 'bg-teal-800 text-xl text-white',
 }
 

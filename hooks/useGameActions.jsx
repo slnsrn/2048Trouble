@@ -9,6 +9,7 @@ export default function useGameActions () {
   const [addNew, setAddNew] = useState(false)
   const [gameLevel, setGameLevel] = useState(undefined)
   const [panning, setPanning] = useState(false)
+  const [score, setScore] = useState(0)
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -25,6 +26,14 @@ export default function useGameActions () {
     }
 
   }, [addNew])
+
+  useEffect(() => {
+    setScore(calculateScore())
+  }, [gameState])
+
+  const calculateScore = () => {
+    return Object.values(gameState).reduce((total, v) => total + v, 0)
+  }
 
   const getRandomCell = () => {
     const emptyCells = FILLABLE_CELLS.filter(cell => !gameState[cell])
@@ -76,7 +85,7 @@ export default function useGameActions () {
 
     setPanning(false)
     const direction = getTouchDirection(e.pageX, e.pageY)
-    handleMove(direction)
+    direction && handleMove(direction)
   }
 
   useEffect(() => {
@@ -141,6 +150,8 @@ export default function useGameActions () {
     const diffY = Math.abs(startY - endY)
     const diffX = Math.abs(startX - endX)
 
+    if (diffX < 5 && diffY < 5) return
+
     if (diffY > diffX) {
       //moves in vertical
       if (endY < startY) {
@@ -172,140 +183,82 @@ export default function useGameActions () {
     return !COLUMNS.some((column) => column.some((cell, i) => gameState[cell] === gameState[column[i + 1]]))
   }
 
-  const moveRight = () => {
+  const moveBackwards = (mapper) => {
     const updatedCells = {}
 
-    ROWS.forEach((row) => {
+    mapper.forEach((set) => {
       const initialValues = []
 
-      row.forEach((cell) => initialValues.push(gameState[cell]))
-      const rowValues = initialValues.filter(v => v)
+      set.forEach((cell) => initialValues.push(gameState[cell]))
+      const setValues = initialValues.filter(v => v)
 
-      const rowLength = rowValues.length
+      const length = setValues.length
 
-      if (rowLength > 1) {
-        let added = false
 
-        for (let i = 0; i < rowLength - 1; i++) {
-          if (!added && rowValues[rowLength - 1 - i] === rowValues[rowLength - 2 - i]) {
-            added = true
-            rowValues[rowLength - 1 - i] = rowValues[rowLength - 1 - i] * 2
-            rowValues.splice(rowLength - 2 - i, 1)
+      if (length > 1) {
+        for (let i = 0; i < length - 1; i++) {
+          if (setValues[length - 1 - i] === setValues[length - 2 - i]) {
+            setValues[length - 1 - i] = setValues[length - 1 - i] * 2
+            setValues.splice(length - 2 - i, 1)
           }
         }
       }
 
-      const arrayChanged = rowValues.some((v, i) => initialValues[(CANVAS_SIZE - rowValues.length) + i] !== v)
+      const arrayChanged = setValues.some((v, i) => initialValues[(CANVAS_SIZE - setValues.length) + i] !== v)
       if (arrayChanged) {
-        row.map((cell, i) => {
-          const emptyCells = CANVAS_SIZE - rowValues.length // can be different than initial rowLength
-          updatedCells[cell] = i < emptyCells ? 0 : rowValues[i - emptyCells]
+        set.map((cell, i) => {
+          const emptyCells = CANVAS_SIZE - setValues.length // can be different than initial rowLength
+          updatedCells[cell] = i < emptyCells ? 0 : setValues[i - emptyCells]
         })
       }
+    })
+
+    return updatedCells
+  }
+
+  const moveForwards = (mapper) => {
+    const updatedCells = {}
+
+    mapper.forEach((set) => {
+      const initialValues = []
+
+      set.forEach((cell) => initialValues.push(gameState[cell]))
+      const setValues = initialValues.filter(v => v)
+
+      const rowLength = setValues.length
+
+      if (rowLength > 1) {
+
+        for (let i = 0; i < rowLength - 1; i++) {
+          if (setValues[i] === setValues[i + 1]) {
+            setValues[i] = setValues[i] * 2
+            setValues.splice(i + 1, 1)
+          }
+        }
+      }
+      const arrayChanged = setValues.some((v, i) => initialValues[i] !== v)
+
+      if (arrayChanged) { set.map((cell, i) => updatedCells[cell] = setValues[i] || 0) }
 
     })
 
     return updatedCells
-
   }
 
   const moveLeft = () => {
-    const updatedCells = {}
-
-    ROWS.forEach((row) => {
-      const initialValues = []
-
-      row.forEach((cell) => initialValues.push(gameState[cell]))
-      const rowValues = initialValues.filter(v => v)
-
-      const rowLength = rowValues.length
-
-      if (rowLength > 1) {
-        let added = false
-
-        for (let i = 0; i < rowLength - 1; i++) {
-          if (!added && rowValues[i] === rowValues[i + 1]) {
-            added = true
-            rowValues[i] = rowValues[i] * 2
-            rowValues.splice(i + 1, 1)
-          }
-        }
-      }
-      const arrayChanged = rowValues.some((v, i) => initialValues[i] !== v)
-
-      if (arrayChanged) { row.map((cell, i) => updatedCells[cell] = rowValues[i] || 0) }
-
-    })
-
-    return updatedCells
+    return moveForwards(ROWS)
   }
 
   const moveUp = () => {
-    const updatedCells = {}
+    return moveForwards(COLUMNS)
+  }
 
-    COLUMNS.forEach((column) => {
-      const initialValues = []
-
-      column.forEach((cell) => initialValues.push(gameState[cell]))
-      const columnValues = initialValues.filter(v => v)
-
-      const length = columnValues.length
-
-      if (length > 1) {
-        let added = false
-
-        for (let i = 0; i < length - 1; i++) {
-          if (!added && columnValues[i] === columnValues[i + 1]) {
-            added = true
-            columnValues[i] = columnValues[i] * 2
-            columnValues.splice(i + 1, 1)
-          }
-        }
-      }
-
-      const arrayChanged = columnValues.some((v, i) => initialValues[i] !== v)
-
-      if (arrayChanged) { column.map((cell, i) => updatedCells[cell] = columnValues[i] || 0) }
-    })
-
-    return updatedCells
+  const moveRight = () => {
+    return moveBackwards(ROWS)
   }
 
   const moveDown = () => {
-    const updatedCells = {}
-
-    COLUMNS.forEach((column) => {
-      const initialValues = []
-
-      column.forEach((cell) => initialValues.push(gameState[cell]))
-      const columnValues = initialValues.filter(v => v)
-
-      const length = columnValues.length
-
-
-      if (length > 1) {
-        let added = false
-
-        for (let i = 0; i < length - 1; i++) {
-          if (!added && columnValues[length - 1 - i] === columnValues[length - 2 - i]) {
-            added = true
-            columnValues[length - 1 - i] = columnValues[length - 1 - i] * 2
-            columnValues.splice(length - 2 - i, 1)
-          }
-        }
-      }
-
-      const arrayChanged = columnValues.some((v, i) => initialValues[(CANVAS_SIZE - columnValues.length) + i] !== v)
-      if (arrayChanged) {
-        column.map((cell, i) => {
-          const emptyCells = CANVAS_SIZE - columnValues.length // can be different than initial rowLength
-          updatedCells[cell] = i < emptyCells ? 0 : columnValues[i - emptyCells]
-        })
-      }
-    })
-
-    return updatedCells
-
+    return moveBackwards(COLUMNS)
   }
 
   const handleMove = (direction) => {
@@ -333,6 +286,6 @@ export default function useGameActions () {
     }
   }
 
-  return { gameState, gameOn, startGame, gameOver, setGameOver, resetGame, canvasRef }
+  return { gameState, gameOn, startGame, gameOver, setGameOver, resetGame, canvasRef, score }
 
 }
