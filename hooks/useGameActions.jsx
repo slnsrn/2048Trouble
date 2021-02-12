@@ -106,13 +106,13 @@ export default function useGameActions () {
     if (canvasRef.current === null) return
 
     if (canvasRef.current) {
-      canvasRef.current.addEventListener('touchstart', onTouchStart)
-      canvasRef.current.addEventListener('touchend', onTouchEnd)
+      canvasRef.current.addEventListener('touchstart', onTouchStart, false)
+      canvasRef.current.addEventListener('touchend', onTouchEnd, false)
     }
     return () => {
       if (canvasRef.current) {
-        canvasRef.current.removeEventListener('touchstart', onTouchStart)
-        canvasRef.current.removeEventListener('touchend', onTouchEnd)
+        canvasRef.current.removeEventListener('touchstart', onTouchStart, false)
+        canvasRef.current.removeEventListener('touchend', onTouchEnd, false)
       }
     }
   }, [canvasRef, onTouchStart, onTouchEnd])
@@ -150,7 +150,7 @@ export default function useGameActions () {
     const diffY = Math.abs(startY - endY)
     const diffX = Math.abs(startX - endX)
 
-    // if (diffX < 5 && diffY < 5) return
+    if (diffX < 5 && diffY < 5) return
 
     if (diffY > diffX) {
       //moves in vertical
@@ -194,13 +194,14 @@ export default function useGameActions () {
 
       const length = setValues.length
 
-
       if (length > 1) {
+        let skipOne = false
         for (let i = 0; i < length - 1; i++) {
-          if (setValues[length - 1 - i] === setValues[length - 2 - i]) {
+          if (!skipOne && setValues[length - 1 - i] === setValues[length - 2 - i]) {
+            skipOne = true
             setValues[length - 1 - i] = setValues[length - 1 - i] * 2
             setValues.splice(length - 2 - i, 1)
-          }
+          } else { skipOne = false }
         }
       }
 
@@ -228,14 +229,15 @@ export default function useGameActions () {
       const rowLength = setValues.length
 
       if (rowLength > 1) {
-
+        let skipOne = false
         for (let i = 0; i < rowLength - 1; i++) {
-          if (setValues[i] === setValues[i + 1]) {
+          if (!skipOne && setValues[i] === setValues[i + 1]) {
             setValues[i] = setValues[i] * 2
             setValues.splice(i + 1, 1)
-          }
+          } else { skipOne = false }
         }
       }
+
       const arrayChanged = setValues.some((v, i) => initialValues[i] !== v)
 
       if (arrayChanged) { set.map((cell, i) => updatedCells[cell] = setValues[i] || 0) }
