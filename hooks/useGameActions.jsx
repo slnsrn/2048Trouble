@@ -77,14 +77,14 @@ export default function useGameActions () {
     if (!gameOn) return
 
     setPanning(true)
-    canvasRef.current.position = { startX: e.pageX, startY: e.pageY }
+    canvasRef.current.position = { startX: e.changedTouches[0].screenX, startY: e.changedTouches[0].screenY }
   }
 
   const onTouchEnd = (e) => {
     if (!gameOn) return
 
     setPanning(false)
-    const direction = getTouchDirection(e.pageX, e.pageY)
+    const direction = getTouchDirection(e.changedTouches[0].screenX, e.changedTouches[0].screenY)
     direction && handleMove(direction)
   }
 
