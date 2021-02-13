@@ -127,7 +127,12 @@ export default function useGameActions () {
         setGameState(createGameSet(gameLevel))
       } else {
         setGameLevel(level)
-        setGameState(createGameSet(level))
+        const set = createGameSet(level)
+        if (isGameOver(set)) {
+          startGame(level)
+        } else {
+          setGameState(set)
+        }
       }
     } else {
       const cell1 = getRandomCell()
@@ -169,18 +174,20 @@ export default function useGameActions () {
     }
   }
 
-  const isGameOver = () => {
-    if (Object.keys(gameState).some(cell => !gameState[cell])) {
+  const isGameOver = (initialSet = undefined) => {
+    const set = initialSet || gameState
+
+    if (Object.keys(set).some(cell => !set[cell])) {
       return false
     }
 
     const rowCheck = ROWS.some((row) =>
-      row.some((cell, i) => gameState[cell] === gameState[row[i + 1]])
+      row.some((cell, i) => set[cell] === set[row[i + 1]])
     )
 
     if (rowCheck) return false
 
-    return !COLUMNS.some((column) => column.some((cell, i) => gameState[cell] === gameState[column[i + 1]]))
+    return !COLUMNS.some((column) => column.some((cell, i) => set[cell] === set[column[i + 1]]))
   }
 
   const moveBackwards = (mapper) => {
