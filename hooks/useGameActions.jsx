@@ -9,8 +9,9 @@ export default function useGameActions () {
   const [addNew, setAddNew] = useState(false)
   const [gameLevel, setGameLevel] = useState(undefined)
   const [panning, setPanning] = useState(false)
-  const [score, setScore] = useState(0)
   const canvasRef = useRef(null)
+
+  const SCORE = useRef(0)
 
   useEffect(() => {
     if (addNew) {
@@ -26,10 +27,6 @@ export default function useGameActions () {
     }
 
   }, [addNew])
-
-  // useEffect(() => {
-  //   setScore(calculateInitialScore(gameState))
-  // }, [gameState])
 
   const getRandomCell = () => {
     const emptyCells = FILLABLE_CELLS.filter(cell => !gameState[cell])
@@ -136,7 +133,7 @@ export default function useGameActions () {
     setGameLevel(level)
     const set = level ? getGameSetWithLevel(level) : getDefaultGameSet()
 
-    setScore(calculateInitialScore(set))
+    SCORE.current = calculateInitialScore(set)
     setGameState(set)
     setGameOn(true)
   }
@@ -201,9 +198,9 @@ export default function useGameActions () {
       if (length > 1) {
         let skipOne = false
         for (let i = 0; i < length - 1; i++) {
-          if (!skipOne && setValues[length - 1 - i] === setValues[length - 2 - i]) {
+          if (!skipOne && setValues[length - 1 - i] && setValues[length - 1 - i] === setValues[length - 2 - i]) {
             skipOne = true
-            setScore((current) => current + setValues[length - 1 - i])
+            SCORE.current = SCORE.current + (setValues[length - 1 - i] * 2)
             setValues[length - 1 - i] = setValues[length - 1 - i] * 2
             setValues.splice(length - 2 - i, 1)
           } else { skipOne = false }
@@ -236,8 +233,8 @@ export default function useGameActions () {
       if (rowLength > 1) {
         let skipOne = false
         for (let i = 0; i < rowLength - 1; i++) {
-          if (!skipOne && setValues[i] === setValues[i + 1]) {
-            setScore((current) => current + setValues[i])
+          if (!skipOne && setValues[i] && setValues[i] === setValues[i + 1]) {
+            SCORE.current = SCORE.current + (setValues[i] * 2)
             setValues[i] = setValues[i] * 2
             setValues.splice(i + 1, 1)
           } else { skipOne = false }
@@ -294,6 +291,6 @@ export default function useGameActions () {
     }
   }
 
-  return { gameState, gameOn, startGame, gameOver, setGameOver, resetGame, canvasRef, score, gameLevel }
+  return { gameState, gameOn, startGame, gameOver, setGameOver, resetGame, canvasRef, gameLevel, score: SCORE.current }
 
 }
