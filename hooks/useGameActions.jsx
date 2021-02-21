@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { CANVAS_SIZE, COLUMNS, ROWS, NEW_VALUE_POOL, INITIAL_STATE, FILLABLE_CELLS, DIRECTION } from '../utils/constants'
-import { createGameSet, } from '../utils/trouble'
+import { createGameSet, calculateInitialScore } from '../utils/trouble'
 
 export default function useGameActions () {
   const [gameState, setGameState] = useState(INITIAL_STATE)
@@ -27,13 +27,9 @@ export default function useGameActions () {
 
   }, [addNew])
 
-  useEffect(() => {
-    setScore(calculateScore())
-  }, [gameState])
-
-  const calculateScore = () => {
-    return Object.values(gameState).reduce((total, v) => total + v, 0)
-  }
+  // useEffect(() => {
+  //   setScore(calculateInitialScore(gameState))
+  // }, [gameState])
 
   const getRandomCell = () => {
     const emptyCells = FILLABLE_CELLS.filter(cell => !gameState[cell])
@@ -117,30 +113,31 @@ export default function useGameActions () {
     }
   }, [canvasRef, onTouchStart, onTouchEnd])
 
+  const getGameSetWithLevel = (level) => {
+    const set = createGameSet(level)
+    if (isGameOver(set)) {
+      getGameSetWithLevel(level)
+    } else {
+      return set
+    }
+  }
+
+  const getDefaultGameSet = () => {
+    const cell1 = getRandomCell()
+    const cell2 = getRandomCell()
+    return { ...cell1, ...cell2 }
+  }
+
   const startGame = (level = undefined) => {
     if (gameOn) return
 
     resetGame()
 
-    if (level) {
-      if (level === 'current') {
-        setGameState(createGameSet(gameLevel))
-      } else {
-        setGameLevel(level)
-        const set = createGameSet(level)
-        if (isGameOver(set)) {
-          startGame(level)
-        } else {
-          setGameState(set)
-        }
-      }
-    } else {
-      const cell1 = getRandomCell()
-      const cell2 = getRandomCell()
+    setGameLevel(level)
+    const set = level ? getGameSetWithLevel(level) : getDefaultGameSet()
 
-      setGameState({ ...gameState, ...cell1, ...cell2 })
-    }
-
+    setScore(calculateInitialScore(set))
+    setGameState(set)
     setGameOn(true)
   }
 
@@ -206,6 +203,7 @@ export default function useGameActions () {
         for (let i = 0; i < length - 1; i++) {
           if (!skipOne && setValues[length - 1 - i] === setValues[length - 2 - i]) {
             skipOne = true
+            setScore((current) => current + setValues[length - 1 - i])
             setValues[length - 1 - i] = setValues[length - 1 - i] * 2
             setValues.splice(length - 2 - i, 1)
           } else { skipOne = false }
@@ -239,6 +237,7 @@ export default function useGameActions () {
         let skipOne = false
         for (let i = 0; i < rowLength - 1; i++) {
           if (!skipOne && setValues[i] === setValues[i + 1]) {
+            setScore((current) => current + setValues[i])
             setValues[i] = setValues[i] * 2
             setValues.splice(i + 1, 1)
           } else { skipOne = false }
@@ -295,6 +294,6 @@ export default function useGameActions () {
     }
   }
 
-  return { gameState, gameOn, startGame, gameOver, setGameOver, resetGame, canvasRef, score }
+  return { gameState, gameOn, startGame, gameOver, setGameOver, resetGame, canvasRef, score, gameLevel }
 
 }

@@ -58,3 +58,7 @@ export const createGameSet = (level) => {
     return troubleSet
   }, {})
 }
+
+export const calculateInitialScore = (set) => {
+  return Object.values(set).reduce((total, v) => total + v, 0)
+}

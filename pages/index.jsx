@@ -14,7 +14,7 @@ import { SelectLevelModal } from '../components/SelectLevelModal'
 function HomePage ({ isMobile }) {
   const [showLevelButtons, setShowLevelButtons] = useState(false)
   const [showResetConfirmation, setShowResetConfirmation] = useState(false)
-  const { gameState, gameOn, startGame, resetGame, gameOver, canvasRef, score } = useGameActions()
+  const { gameState, gameOn, startGame, resetGame, gameOver, canvasRef, score, gameLevel } = useGameActions()
 
   const handleLevelSelection = (level) => {
     startGame(level)
@@ -92,7 +92,7 @@ function HomePage ({ isMobile }) {
         {renderCanvas()}
         {renderButtons()}
       </div>
-      {gameOver && <GameOverModal onConfirm={() => startGame('current')} onCancel={resetGame} />}
+      {gameOver && <GameOverModal onConfirm={() => startGame(gameLevel)} onCancel={resetGame} />}
       {showResetConfirmation && <ResetConfirmationModal onConfirm={handleReset} onCancel={() => setShowResetConfirmation(false)} />}
     </div >
   )
