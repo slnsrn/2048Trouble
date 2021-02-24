@@ -40,20 +40,20 @@ export const COLUMNS = [
 export const NEW_VALUE_POOL = [...Array.from({ length: 85 }, () => 2), ...Array.from({ length: 15 }, () => 4)]
 
 export const COLOR_MAPPING = {
-  2: 'bg-amber-50 text-2xl text-coolGray-600',
-  4: 'bg-amber-100 text-2xl text-coolGray-600',
-  8: 'bg-amber-200 text-2xl text-coolGray-600',
-  16: 'bg-amber-300 text-2xl text-coolGray-600',
-  32: 'bg-orange-400 text-2xl text-white',
-  64: 'bg-orange-500 text-2xl text-white',
-  128: 'bg-orange-600 text-2xl text-white',
-  256: 'bg-orange-700 text-2xl text-white',
-  512: 'bg-rose-500 text-2xl text-white',
-  1024: 'bg-rose-600 text-xl text-white',
-  2048: 'bg-pink-700 text-xl text-white',
-  4096: 'bg-teal-500 text-xl text-white',
-  8192: 'bg-teal-800 text-xl text-white',
-  16384: 'bg-teal-800 text-xl text-white',
+  2: 'bg-amber-50 text-2xl text-coolGray-600 dark:bg-blueGray-100',
+  4: 'bg-amber-100 text-2xl text-coolGray-600 dark:bg-blueGray-200',
+  8: 'bg-amber-200 text-2xl text-coolGray-600 dark:bg-blueGray-300',
+  16: 'bg-amber-300 text-2xl text-coolGray-600 dark:bg-blueGray-400',
+  32: 'bg-orange-400 text-2xl text-white dark:bg-blueGray-500 dark:text-coolGray-600',
+  64: 'bg-orange-500 text-2xl text-white dark:bg-blue-400 dark:text-coolGray-600',
+  128: 'bg-orange-600 text-2xl text-white dark:bg-blue-500 dark:text-coolGray-600',
+  256: 'bg-orange-700 text-2xl text-white dark:bg-indigo-300 dark:text-coolGray-600',
+  512: 'bg-rose-500 text-2xl text-white dark:bg-indigo-400 dark:text-coolGray-600',
+  1024: 'bg-rose-600 text-xl text-white dark:bg-rose-300 dark:text-coolGray-600',
+  2048: 'bg-pink-700 text-xl text-white dark:bg-rose-400 dark:text-coolGray-600',
+  4096: 'bg-teal-500 text-xl text-white dark:bg-amber-300 dark:text-coolGray-600',
+  8192: 'bg-teal-800 text-xl text-white dark:bg-amber-400 dark:text-coolGray-600',
+  16384: 'bg-teal-800 text-xl text-white dark:bg-teal-300 dark:text-coolGray-600',
 }
 
 export const DIRECTION = {

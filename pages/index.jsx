@@ -29,15 +29,15 @@ function HomePage ({ isMobile }) {
   const renderCanvas = () => {
     return (
       <div className="w-full md:w-1/2 flex justify-center md:justify-end p-4 md:p-6" ref={canvasRef}>
-        <div className='border-warm-200 border-4 self-end' style={{ width: '16rem' }}>
+        <div className='border-warm-200 dark:border-gray-600 border-4 self-end' style={{ width: '16rem' }}>
           {Array.from({ length: CANVAS_SIZE }).map((item, i) => (
-            <div key={i} className={cx({ 'border-b-4 border-warm-200': i < CANVAS_SIZE - 1 }, 'flex flex-row')}>
+            <div key={i} className={cx({ 'border-b-4 border-warm-200 dark:border-gray-600': i < CANVAS_SIZE - 1 }, 'flex flex-row')}>
               {Array.from({ length: CANVAS_SIZE }).map((cell, j) => {
                 const index = LETTERS[i] + (j + 1)
                 return (
                   <div
-                    className={cx('transition duration-250 w-16 h-16 bg-white flex box-content', COLOR_MAPPING[gameState[index]], {
-                      'border-r-4 border-warm-200': j < CANVAS_SIZE - 1,
+                    className={cx('transition w-16 h-16 flex box-content dark:transition-none', COLOR_MAPPING[gameState[index]], {
+                      'border-r-4 border-warm-200 dark:border-gray-600': j < CANVAS_SIZE - 1,
                     })}
                     key={j}
                   >
@@ -56,8 +56,7 @@ function HomePage ({ isMobile }) {
       <div className=" w-full md:w-1/2 flex flex-col justify-center md:justify-end p-4 md:p-6">
         <div className='self-center md:self-start'>
 
-          {gameOn && <div className='text-blueGray-600 text-4xl leading-normal font-bold text-center mb-2 md:mb-4'>{score}</div>}
-
+          {gameOn && <div className='text-blueGray-600 dark:text-amber-200 text-4xl leading-normal font-bold text-center mb-2 md:mb-4'>{score}</div>}
           {!gameOn &&
             <div className='hidden lg:flex lg:flex-col justify-center mb-4 items-center'>
               <img className='w-24' src='navigation.png' alt='use arrow keys to play' />
@@ -86,8 +85,8 @@ function HomePage ({ isMobile }) {
   }
 
   return (
-    <div className="px-4 md:px-6 py-8 md:p-20 bg-warm-50 w-full h-screen">
-      <h1 className='text-center font-bold text-3xl md:text-4xl lg:text-6xl text-blueGray-700 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 mr-1 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble.png' alt='' />UBLE</h1>
+    <div className="px-4 md:px-6 py-8 md:p-20 bg-warm-50 dark:bg-gray-700 w-full h-screen">
+      <h1 className='text-center font-bold text-3xl md:text-4xl lg:text-6xl text-blueGray-700 dark:text-amber-300 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 mr-1 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble-dark-i.png' alt='' />UBLE</h1>
       <div className="flex flex-col md:flex-row justify-center">
         {renderCanvas()}
         {renderButtons()}

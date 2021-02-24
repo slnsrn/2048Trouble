@@ -8,8 +8,11 @@ export default function Button ({ onClick, disabled = false, label, className = 
     <button
       onClick={onClick}
       disabled={disabled}
-      className={cx({ 'cursor-not-allowed bg-blueGray-400': disabled, 'bg-blueGray-600 hover:bg-blueGray-600': !disabled }, className,
-        "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-base font-bold rounded-md text-white outline-none")}>
+      className={cx({
+        'cursor-not-allowed bg-blueGray-400 dark:bg-blue-200 dark:text-blueGray-500': disabled,
+        'bg-blueGray-600 hover:bg-blueGray-600 dark:bg-blue-400 dark:hover:bg-blue-500 text-white dark:text-blueGray-700': !disabled
+      }, className,
+        "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-base font-bold rounded-md outline-none")}>
       {label}
     </button>)
 }

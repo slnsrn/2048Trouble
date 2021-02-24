@@ -4,7 +4,7 @@ import Button from "./Button"
 
 export const GameOverModal = withOverlay(({ onConfirm, onCancel }) => {
   return (
-    <div className="bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all p-6 sm:align-middle w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+    <div className="bg-white dark:bg-blue-200 rounded-lg text-left overflow-hidden shadow-xl transform transition-all p-6 sm:align-middle w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
       <div className='pt-2 pb-4'>
         <div className="sm:flex sm:items-start">
           <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
