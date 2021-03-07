@@ -28,7 +28,7 @@ function HomePage ({ isMobile }) {
 
   const renderCanvas = () => {
     return (
-      <div className="w-full sm:w-1/2 flex justify-center md:justify-end p-4 md:p-6" ref={canvasRef}>
+      <div className="w-full md:w-1/2 flex justify-center md:justify-end p-4 md:p-6" ref={canvasRef}>
         <div className='border-warmGray-200 dark:border-gray-600 border-4 self-end' style={{ width: '16rem' }}>
           {Array.from({ length: CANVAS_SIZE }).map((item, i) => (
             <div key={i} className={cx({ 'border-b-4 border-warmGray-200 dark:border-gray-600': i < CANVAS_SIZE - 1 }, 'flex flex-row')}>
@@ -53,7 +53,7 @@ function HomePage ({ isMobile }) {
 
   const renderButtons = () => {
     return (
-      <div className=" w-full sm:w-1/2 flex flex-col justify-center md:justify-end p-4 md:p-6">
+      <div className=" w-full md:w-1/2 flex flex-col justify-center md:justify-end p-4 md:p-6">
         <div className='self-center md:self-start'>
 
           {gameOn && <div className='text-warmGray-700 dark:text-amber-200 text-4xl leading-normal font-bold text-center mb-2 md:mb-4'>{score}</div>}
@@ -87,7 +87,7 @@ function HomePage ({ isMobile }) {
   return (
     <div className="px-4 md:px-6 py-8 md:p-20 bg-warmGray-100 dark:bg-gray-700 w-screen h-screen">
       <h1 className='text-center font-bold text-3xl md:text-4xl lg:text-6xl text-warmGray-700 dark:text-amber-300 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 mr-1 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble-dark-i.png' alt='' />UBLE</h1>
-      <div className="flex flex-col sm:flex-row justify-center">
+      <div className="flex flex-col md:flex-row justify-center">
         {renderCanvas()}
         {renderButtons()}
       </div>
