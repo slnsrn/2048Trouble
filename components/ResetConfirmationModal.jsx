@@ -4,14 +4,14 @@ import Button from "./Button"
 
 export const ResetConfirmationModal = withOverlay(({ onConfirm, onCancel }) => {
   return (
-    <div className="bg-warmGray-100 dark:bg-blue-200 rounded-lg text-left overflow-hidden shadow-xl transform transition-all p-4 md:p-6 sm:align-middle w-full max-w-xs" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+    <div className="bg-warmGray-100 dark:bg-gray-700 rounded-lg text-left overflow-hidden shadow-xl transform transition-all p-4 md:p-6 sm:align-middle w-full max-w-xs" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
       <div className='pt-2 pb-4'>
         <div className="sm:flex sm:items-start">
           <div className="mx-auto flex-shrink-0 self-center flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
             <img src='trouble-dark.png' alt='' />
           </div>
           <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left self-center ">
-            <h3 className="leading-normal text-xl text-warmGray-800 dark:text-gray-800" id="modal-headline">
+            <h3 className="leading-normal text-xl text-warmGray-800 dark:text-warmGray-300" id="modal-headline">
               Do you want to end the ongoing game?
             </h3>
           </div>
