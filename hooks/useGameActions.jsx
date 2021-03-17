@@ -234,6 +234,7 @@ export default function useGameActions () {
         let skipOne = false
         for (let i = 0; i < rowLength - 1; i++) {
           if (!skipOne && setValues[i] && setValues[i] === setValues[i + 1]) {
+            skipOne = true
             SCORE.current = SCORE.current + (setValues[i] * 2)
             setValues[i] = setValues[i] * 2
             setValues.splice(i + 1, 1)
