@@ -62,3 +62,4 @@ export const DIRECTION = {
   up: 'up',
   down: 'down',
 }
+

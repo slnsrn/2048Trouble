@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { CANVAS_SIZE, COLUMNS, ROWS, NEW_VALUE_POOL, INITIAL_STATE, FILLABLE_CELLS, DIRECTION } from '../utils/constants'
+import { CANVAS_SIZE, COLUMNS, ROWS, NEW_VALUE_POOL, INITIAL_STATE, FILLABLE_CELLS, DIRECTION, storage } from '../utils/constants'
 import { createGameSet, calculateInitialScore } from '../utils/trouble'
 
 export default function useGameActions () {
@@ -15,7 +15,9 @@ export default function useGameActions () {
 
   useEffect(() => {
     if (addNew) {
-      setGameState({ ...gameState, ...getRandomCell() })
+      const newState = { ...gameState, ...getRandomCell() }
+      setGameState(newState)
+      window?.localStorage?.setItem('gameState', JSON.stringify(newState));
       setAddNew(false)
     }
 
@@ -27,6 +29,13 @@ export default function useGameActions () {
     }
 
   }, [addNew])
+
+  useEffect(() => {
+    if (window) {
+      const game = localStorage?.getItem('gameState')
+      setGameState(game ? JSON.parse(game) : INITIAL_STATE)
+    }
+  }, [])
 
   const getRandomCell = () => {
     const emptyCells = FILLABLE_CELLS.filter(cell => !gameState[cell])
@@ -140,6 +149,7 @@ export default function useGameActions () {
 
   const resetGame = () => {
     setGameState(INITIAL_STATE)
+    localStorage.removeItem('gameState');
     setGameOn(false)
     setGameOver(false)
   }
