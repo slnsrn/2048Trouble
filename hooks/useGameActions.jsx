@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
-import { CANVAS_SIZE, COLUMNS, ROWS, NEW_VALUE_POOL, INITIAL_STATE, FILLABLE_CELLS, DIRECTION, storage } from '../utils/constants'
-import { createGameSet, calculateInitialScore } from '../utils/trouble'
+import { CANVAS_SIZE, COLUMNS, ROWS, NEW_VALUE_POOL, INITIAL_STATE, FILLABLE_CELLS, DIRECTION } from '../utils/constants'
+import { createGameSet, calculateInitialScore, getRandomInt } from '../utils/trouble'
 
 export default function useGameActions () {
   const [gameState, setGameState] = useState(INITIAL_STATE)
@@ -17,7 +17,6 @@ export default function useGameActions () {
     if (addNew) {
       const newState = { ...gameState, ...getRandomCell() }
       setGameState(newState)
-      window?.localStorage?.setItem('gameState', JSON.stringify(newState));
       setAddNew(false)
     }
 
@@ -30,18 +29,11 @@ export default function useGameActions () {
 
   }, [addNew])
 
-  useEffect(() => {
-    if (window) {
-      const game = localStorage?.getItem('gameState')
-      setGameState(game ? JSON.parse(game) : INITIAL_STATE)
-    }
-  }, [])
-
   const getRandomCell = () => {
     const emptyCells = FILLABLE_CELLS.filter(cell => !gameState[cell])
-    const random = Math.random()
-    const cell = emptyCells[Math.floor(random * (emptyCells.length - 1))]
-    return { [cell]: NEW_VALUE_POOL[Math.floor(random * 99)] }
+    const cell = emptyCells[getRandomInt(emptyCells.length)]
+
+    return { [cell]: NEW_VALUE_POOL[getRandomInt(100)] }
   }
 
   const moveOnKeyPressed = (e) => {
@@ -149,7 +141,6 @@ export default function useGameActions () {
 
   const resetGame = () => {
     setGameState(INITIAL_STATE)
-    localStorage.removeItem('gameState');
     setGameOn(false)
     setGameOver(false)
   }
@@ -241,14 +232,12 @@ export default function useGameActions () {
       const rowLength = setValues.length
 
       if (rowLength > 1) {
-        let skipOne = false
         for (let i = 0; i < rowLength - 1; i++) {
-          if (!skipOne && setValues[i] && setValues[i] === setValues[i + 1]) {
-            skipOne = true
+          if (setValues[i] && setValues[i] === setValues[i + 1]) {
             SCORE.current = SCORE.current + (setValues[i] * 2)
             setValues[i] = setValues[i] * 2
             setValues.splice(i + 1, 1)
-          } else { skipOne = false }
+          }
         }
       }
 

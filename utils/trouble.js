@@ -62,3 +62,5 @@ export const createGameSet = (level) => {
 export const calculateInitialScore = (set) => {
   return Object.values(set).reduce((total, v) => total + v, 0)
 }
+
+export const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))

@@ -1,19 +1,19 @@
 export const CANVAS_SIZE = 4
 
 export const INITIAL_STATE = {
-  a1: 0,
-  a2: 0,
-  a3: 0,
-  a4: 0,
-  b1: 0,
+  a1: 2,
+  a2: 2,
+  a3: 2,
+  a4: 2,
+  b1: 2,
   b2: 0,
   b3: 0,
   b4: 0,
-  c1: 0,
+  c1: 2,
   c2: 0,
   c3: 0,
   c4: 0,
-  d1: 0,
+  d1: 2,
   d2: 0,
   d3: 0,
   d4: 0,
@@ -62,4 +62,3 @@ export const DIRECTION = {
   up: 'up',
   down: 'down',
 }
-
