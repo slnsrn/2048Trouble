@@ -86,7 +86,7 @@ function HomePage ({ isMobile }) {
   }
 
   return (
-    <div className="px-4 md:px-6 py-8 md:p-20 bg-warmGray-100 dark:bg-gray-700 w-screen h-screen">
+    <div className="px-4 md:px-6 py-8 md:p-20 bg-warmGray-100 dark:bg-gray-700 w-screen h-full">
       <h1 className='text-center font-bold text-3xl md:text-4xl lg:text-6xl text-warmGray-700 dark:text-amber-300 flex justify-center tracking-widest'> 2048 TR<img className='w-8 h-8 mr-1 md:w-10 md:h-10 lg:h-12 lg:w-12 self-center' src='trouble-dark-i.png' alt='' />UBLE</h1>
       <div className="flex flex-col md:flex-row justify-center">
         {renderCanvas()}
