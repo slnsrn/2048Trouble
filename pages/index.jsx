@@ -9,6 +9,7 @@ import Button from '../components/Button'
 import { GameOverModal } from '../components/GameOverModal'
 import { ResetConfirmationModal } from '../components/ResetConfirmationModal'
 import { SelectLevelModal } from '../components/SelectLevelModal'
+import SeoContent from '../components/SeoContent';
 
 
 function HomePage ({ isMobile }) {
@@ -91,6 +92,7 @@ function HomePage ({ isMobile }) {
         {renderCanvas()}
         {renderButtons()}
       </div>
+      <SeoContent isMobile />
       {gameOver && <GameOverModal onConfirm={() => startGame(gameLevel)} onCancel={resetGame} />}
       {showResetConfirmation && <ResetConfirmationModal onConfirm={handleReset} onCancel={() => setShowResetConfirmation(false)} />}
     </div >
