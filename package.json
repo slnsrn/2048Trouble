@@ -15,18 +15,18 @@
   "author": "slnsrn@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.2.4",
-    "classnames": "^2.2.6",
     "next": "^10.0.6",
-    "postcss": "^8.2.5",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "tailwindcss": "^2.0.3"
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
+    "autoprefixer": "^10.2.4",
+    "classnames": "^2.2.6",
     "eslint": "^7.19.0",
     "eslint-plugin-react": "^7.22.0",
+    "postcss": "^8.2.5",
     "prettier": "2.2.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "tailwindcss": "^2.0.3"
   }
 }
