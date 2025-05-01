@@ -39,22 +39,74 @@ export const COLUMNS = [
 
 export const NEW_VALUE_POOL = [...Array.from({ length: 85 }, () => 2), ...Array.from({ length: 15 }, () => 4)]
 
+/**
+ * Generates tailwind color classes based on the tile number
+ * @param {number} value - The number on the tile
+ * @returns {string} - Tailwind classes for the tile
+ */
+export const getTileColorClasses = (value) => {
+  if (!value) return '';
+
+  // Calculate the power of 2 (log base 2) to determine color intensity
+  const power = Math.log2(value);
+
+  // Text size decreases as the number gets larger
+  const textSize = power > 6 ? 'text-xl' : 'text-2xl';
+
+  // Text color changes based on background brightness
+  const textColor = power <= 5 ? 'text-gray-700' : 'text-white';
+
+  // Use a switch statement to assign colors from yellow -> amber -> orange -> red
+  // with better differentiation between high values
+  switch (power) {
+    case 1: // 2
+      return `bg-yellow-200 ${textSize} ${textColor}`;  // Darker yellow for 2 to avoid being too bright
+    case 2: // 4
+      return `bg-yellow-300 ${textSize} ${textColor}`;
+    case 3: // 8
+      return `bg-yellow-400 ${textSize} ${textColor}`;
+    case 4: // 16
+      return `bg-yellow-500 ${textSize} ${textColor}`;
+    case 5: // 32
+      return `bg-amber-400 ${textSize} ${textColor}`;
+    case 6: // 64
+      return `bg-amber-500 ${textSize} ${textColor}`;
+    case 7: // 128
+      return `bg-amber-600 ${textSize} ${textColor}`;
+    case 8: // 256
+      return `bg-orange-500 ${textSize} ${textColor}`;
+    case 9: // 512
+      return `bg-orange-600 ${textSize} ${textColor}`;
+    case 10: // 1024
+      return `bg-orange-700 ${textSize} ${textColor}`;
+    case 11: // 2048
+      return `bg-red-600 ${textSize} ${textColor}`;
+    case 12: // 4096
+      return `bg-red-700 ${textSize} ${textColor}`;
+    case 13: // 8192
+      return `bg-red-800 ${textSize} ${textColor}`;
+    default: // 16384+
+      return `bg-red-800 ${textSize} ${textColor}`;
+  }
+};
+
+// Keep the old mapping for reference or in case some parts of the code still use it
 export const COLOR_MAPPING = {
-  2: 'bg-amber-50 text-2xl text-coolGray-600 dark:bg-yellow-100',
-  4: 'bg-amber-100 text-2xl text-coolGray-600 dark:bg-yellow-200',
-  8: 'bg-amber-200 text-2xl text-coolGray-600 dark:bg-amber-300',
-  16: 'bg-amber-300 text-2xl text-coolGray-600 dark:bg-red-200',
-  32: 'bg-orange-400 text-2xl text-white dark:bg-rose-300 dark:text-coolGray-600',
-  64: 'bg-orange-500 text-2xl text-white dark:bg-rose-400 dark:text-coolGray-200',
-  128: 'bg-orange-600 text-2xl text-white dark:bg-indigo-200 dark:text-coolGray-600',
-  256: 'bg-orange-700 text-2xl text-white dark:bg-indigo-300 dark:text-coolGray-600',
-  512: 'bg-rose-500 text-2xl text-white dark:bg-indigo-400 dark:text-coolGray-200',
-  1024: 'bg-rose-600 text-xl text-white dark:bg-blue-300 dark:text-coolGray-600',
-  2048: 'bg-pink-700 text-xl text-white dark:bg-blue-400 dark:text-coolGray-200',
-  4096: 'bg-teal-500 text-xl text-white dark:bg-teal-200 dark:text-coolGray-600',
-  8192: 'bg-teal-800 text-xl text-white dark:bg-teal-300 dark:text-coolGray-600',
-  16384: 'bg-teal-800 text-xl text-white dark:bg-teal-400 dark:text-coolGray-200',
-}
+  2: 'bg-amber-50 text-2xl text-gray-700 dark:bg-amber-100 dark:text-gray-700',
+  4: 'bg-amber-100 text-2xl text-gray-700 dark:bg-amber-200 dark:text-gray-700',
+  8: 'bg-amber-200 text-2xl text-gray-700 dark:bg-amber-300 dark:text-gray-700',
+  16: 'bg-amber-300 text-2xl text-gray-700 dark:bg-amber-400 dark:text-gray-700',
+  32: 'bg-orange-400 text-2xl text-white dark:bg-orange-300 dark:text-gray-700',
+  64: 'bg-orange-500 text-2xl text-white dark:bg-orange-400 dark:text-gray-700',
+  128: 'bg-orange-600 text-2xl text-white dark:bg-orange-500 dark:text-white',
+  256: 'bg-orange-700 text-2xl text-white dark:bg-orange-600 dark:text-white',
+  512: 'bg-rose-500 text-2xl text-white dark:bg-rose-400 dark:text-white',
+  1024: 'bg-rose-600 text-xl text-white dark:bg-rose-500 dark:text-white',
+  2048: 'bg-rose-700 text-xl text-white dark:bg-rose-600 dark:text-white',
+  4096: 'bg-teal-500 text-xl text-white dark:bg-teal-400 dark:text-white',
+  8192: 'bg-teal-600 text-xl text-white dark:bg-teal-500 dark:text-white',
+  16384: 'bg-teal-700 text-xl text-white dark:bg-teal-600 dark:text-white',
+};
 
 export const DIRECTION = {
   right: 'right',
