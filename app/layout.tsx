@@ -1,6 +1,7 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: '2048Trouble',
   description: 'Play 2048 with a troubled start',
   openGraph: {
@@ -8,9 +9,11 @@ export const metadata = {
     title: '2048Trouble',
     url: 'https://2048Trouble.com',
     description: 'Play 2048 with a troubled start',
-    images: [{
-      url: 'https://2048Trouble.com/app-image.png',
-    }],
+    images: [
+      {
+        url: 'https://2048Trouble.com/app-image.png',
+      },
+    ],
   },
   twitter: {
     card: 'summary',
@@ -19,9 +22,13 @@ export const metadata = {
     description: 'Play 2048 with a troubled start',
     images: ['https://2048Trouble.com/app-image.png'],
   },
-}
+};
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <head>
@@ -31,9 +38,7 @@ export default function RootLayout({ children }) {
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
         />
       </head>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
-  )
+  );
 }
