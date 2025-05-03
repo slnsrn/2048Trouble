@@ -136,3 +136,26 @@ h1 {
     @apply bg-background text-foreground;
   }
 }
+
+/* Add these tile animation styles at the end of the file */
+.game-tile {
+  transition-property: transform;
+  transition-duration: 100ms;
+  transition-timing-function: ease-out;
+  position: relative;
+}
+
+.game-tile-new {
+  animation: appear 200ms ease-in-out;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

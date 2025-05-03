@@ -1,12 +1,12 @@
-import React from 'react';
-import cx from 'classnames';
-import { getTileColorClasses } from '../utils/constants';
+import React from 'react'
+import cx from 'classnames'
+import { getTileColorClasses } from '@/lib/constants'
 
 const ColorShowcase = () => {
   // All possible tile values from 2 to 8192
   const tileValues = [
     2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192,
-  ];
+  ]
 
   return (
     <div className="w-full mt-8 mb-4 p-4 border-2 border-amber-300 rounded-lg">
@@ -26,7 +26,7 @@ const ColorShowcase = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ColorShowcase;
+export default ColorShowcase

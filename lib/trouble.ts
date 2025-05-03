@@ -1,7 +1,6 @@
-import { LETTERS, CANVAS_SIZE, GameState } from './constants';
+import { LETTERS, CANVAS_SIZE, GameState } from './constants'
 
-const getRandomNumber = (max: number): number =>
-  Math.floor(Math.random() * max);
+const getRandomNumber = (max: number): number => Math.floor(Math.random() * max)
 
 export enum Level {
   EASY = 'easy',
@@ -47,23 +46,23 @@ const LEVEL_POOL: Record<Level, number[]> = {
     ...Array.from({ length: 12 }, () => 512),
     ...Array.from({ length: 3 }, () => 1024),
   ],
-};
+}
 
 export const createGameSet = (level: Level): GameState => {
-  const pool = LEVEL_POOL[level];
+  const pool = LEVEL_POOL[level]
 
   return LETTERS.reduce((troubleSet: Partial<GameState>, letter) => {
     for (let i = 0; i < CANVAS_SIZE; i++) {
-      const key = `${letter}${i + 1}` as keyof GameState;
-      troubleSet[key] = pool[getRandomNumber(pool.length - 1)];
+      const key = `${letter}${i + 1}` as keyof GameState
+      troubleSet[key] = pool[getRandomNumber(pool.length - 1)]
     }
-    return troubleSet;
-  }, {}) as GameState;
-};
+    return troubleSet
+  }, {}) as GameState
+}
 
 export const calculateInitialScore = (set: GameState): number => {
-  return Object.values(set).reduce((total, v) => total + v, 0);
-};
+  return Object.values(set).reduce((total, v) => total + v, 0)
+}
 
 export const getRandomInt = (max: number): number =>
-  Math.floor(Math.random() * Math.floor(max));
+  Math.floor(Math.random() * Math.floor(max))

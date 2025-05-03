@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors');
+const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -31,9 +31,8 @@ module.exports = {
         teal: colors.teal,
         pink: colors.pink,
         rose: colors.rose,
-        warmGray: colors.stone,
-        coolGray: colors.gray,
-        blueGray: colors.slate,
+        coolzinc: colors.zinc,
+        bluezinc: colors.slate,
         indigo: colors.indigo,
 
         // ShadCN color variables
@@ -102,7 +101,7 @@ module.exports = {
     'text-xl',
     'text-2xl',
     'text-white',
-    'text-gray-700',
+    'text-zinc-700',
     { pattern: /bg-(yellow|amber|orange|red)-(200|300|400|500|600|700|800)/ },
   ],
-};
+}
