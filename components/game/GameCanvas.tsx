@@ -19,6 +19,7 @@ export default function GameCanvas() {
       for (let j = 0; j < CANVAS_SIZE; j++) {
         const pos = LETTERS[i] + (j + 1)
         if (
+          // @ts-ignore
           gameState[pos] &&
           (!previousGameState[pos as keyof typeof previousGameState] ||
             gameState[pos as keyof typeof gameState] !==
@@ -27,6 +28,7 @@ export default function GameCanvas() {
           // Check if this position didn't exist or had a different value before
           let foundInPrevious = false
           for (let key in previousGameState) {
+             // @ts-ignore
             if (previousGameState[key] === gameState[pos]) {
               foundInPrevious = true
               break

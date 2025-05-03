@@ -33,7 +33,7 @@ interface GameContextType {
   gameOver: boolean
   setGameOver: (value: boolean) => void
   resetGame: () => void
-  canvasRef: RefObject<CanvasRefWithPosition>
+  canvasRef: RefObject<CanvasRefWithPosition | null>
   gameLevel?: Level
   score: number
   handleMove: (direction: Direction) => void
