@@ -33,10 +33,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <script
-          data-ad-client="ca-pub-2322848954109478"
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-        />
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1763623572416984"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body>
         {children}
