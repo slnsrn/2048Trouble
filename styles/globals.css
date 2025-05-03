@@ -25,20 +25,40 @@ h1 {
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
+  --color-tile-text: #776e65; /* Peach (2) */
+  /* Your existing colors (tiles 2-128) */
+  --color-tile1: #eee4da; /* Light beige (2) */
+  --color-tile2: #ebd8b6; /* Warm sand (4) */
+  --color-tile3: #f2b177; /* Peach (8) */
+  --color-tile4: #f5925e; /* Light orange (16) */
+  --color-tile5: #f78064; /* Coral (32) */
+  --color-tile6: #f76340; /* Bright orange (64) */
+  --color-tile7: #feba17; /* Golden yellow (128) */
+
+  /* New colors (tiles 256-16384) */
+  --color-tile8: #b17457; /* Mustard (256) - darker gold */
+  --color-tile9: #e76f51; /* Burnt orange (512) */
+  --color-tile10: #d8572a; /* Rust (1024) */
+  --color-tile11: #fa4032; /* Brick red (2048) */
+  --color-tile12: #9c4a96; /* Plum (4096) */
+  --color-tile13: #6a4c93; /* Royal purple (8192) */
+  --color-tile14: #3a2c5a; /* Deep violet (16384) */
+  --color-background: #f7f4f0;
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
+  --color-primary: #212031;
   --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: #8e7dbe; /* purple */
+  --color-secondary-foreground: #fff;
+  --color-tertiary: #d8d2c2;
+  --color-tertiary-foreground: var(--primary);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: #f59e0b; /* orange */
+  --color-accent-foreground: #fff;
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-input: var(--input);

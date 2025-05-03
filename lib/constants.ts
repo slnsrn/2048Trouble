@@ -94,40 +94,11 @@ export const getTileColorClasses = (value: number) => {
   const textSize = power > 6 ? 'text-xl' : 'text-2xl'
 
   // Text color changes based on background brightness
-  const textColor = power <= 5 ? 'text-zinc-700' : 'text-white'
+  const textColor = power <= 2 ? 'text-tile-text' : 'text-white'
 
   // Use a switch statement to assign colors from yellow -> amber -> orange -> red
   // with better differentiation between high values
-  switch (power) {
-    case 1: // 2
-      return `bg-yellow-200 ${textSize} ${textColor}` // Darker yellow for 2 to avoid being too bright
-    case 2: // 4
-      return `bg-yellow-300 ${textSize} ${textColor}`
-    case 3: // 8
-      return `bg-yellow-400 ${textSize} ${textColor}`
-    case 4: // 16
-      return `bg-yellow-500 ${textSize} ${textColor}`
-    case 5: // 32
-      return `bg-amber-400 ${textSize} ${textColor}`
-    case 6: // 64
-      return `bg-amber-500 ${textSize} ${textColor}`
-    case 7: // 128
-      return `bg-amber-600 ${textSize} ${textColor}`
-    case 8: // 256
-      return `bg-orange-500 ${textSize} ${textColor}`
-    case 9: // 512
-      return `bg-orange-600 ${textSize} ${textColor}`
-    case 10: // 1024
-      return `bg-orange-700 ${textSize} ${textColor}`
-    case 11: // 2048
-      return `bg-red-600 ${textSize} ${textColor}`
-    case 12: // 4096
-      return `bg-red-700 ${textSize} ${textColor}`
-    case 13: // 8192
-      return `bg-red-800 ${textSize} ${textColor}`
-    default: // 16384+
-      return `bg-red-800 ${textSize} ${textColor}`
-  }
+  return `bg-tile${power} ${textSize} ${textColor}`
 }
 
 export enum Direction {

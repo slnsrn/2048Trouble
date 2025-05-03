@@ -20,56 +20,6 @@ module.exports = {
       },
     },
     extend: {
-      colors: {
-        // Colors needed for the number tiles
-        yellow: colors.yellow,
-        amber: colors.amber,
-        orange: colors.orange,
-        red: colors.red,
-
-        // Other colors used in the UI
-        teal: colors.teal,
-        pink: colors.pink,
-        rose: colors.rose,
-        coolzinc: colors.zinc,
-        bluezinc: colors.slate,
-        indigo: colors.indigo,
-
-        // ShadCN color variables
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
-        },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
-        },
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
-        },
-      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
@@ -93,15 +43,20 @@ module.exports = {
   },
   plugins: [require('tailwindcss-animate')],
   safelist: [
-    // Safelist for color classes used by tiles
-    'w-16',
-    'h-16',
-    'flex',
-    'mb-1',
-    'text-xl',
-    'text-2xl',
-    'text-white',
-    'text-zinc-700',
+    'bg-tile1',
+    'bg-tile2',
+    'bg-tile3',
+    'bg-tile4',
+    'bg-tile5',
+    'bg-tile6',
+    'bg-tile7',
+    'bg-tile8',
+    'bg-tile9',
+    'bg-tile10',
+    'bg-tile11',
+    'bg-tile12',
+    'bg-tile13',
+    'bg-tile14',
     { pattern: /bg-(yellow|amber|orange|red)-(200|300|400|500|600|700|800)/ },
   ],
 }

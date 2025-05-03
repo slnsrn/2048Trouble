@@ -40,16 +40,16 @@ export default function Title({ title }: { title: string }): React.JSX.Element {
 
   return (
     <div
-      className="cursor-pointer relative text-6xl"
+      className="cursor-pointer relative text-4xl md:text-6xl"
       onMouseMove={onMouseMove}
       onMouseOut={onMouseOut}
       ref={titleRef}
     >
-      <div className="text-amber-300">
+      <div className="text-secondary">
         <h1>{title}</h1>
       </div>
       <div
-        className="absolute top-0 left-0 w-full h-full text-indigo-400"
+        className="absolute top-0 left-0 w-full h-full text-accent"
         style={maskStyle}
       >
         <h1>{title}</h1>

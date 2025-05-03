@@ -11,7 +11,7 @@ export default function AdminLayout({
 }) {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900">
-      <header className="bg-amber-500 dark:bg-amber-700 p-4">
+      <header className="bg-rose-300 dark:bg-amber-700 p-4">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-xl font-bold text-white">2048Trouble Admin</h1>
           <Link href="/">
