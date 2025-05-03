@@ -30,7 +30,7 @@ export default function Title({ title }: { title: string }): React.JSX.Element {
   }
 
   const topRightX = position.x + (position.y - 50) * 0.5
-  const bottomRightX = position.x + (position.y - 50) * -2.5
+  const bottomRightX = position.x + (position.y - 50) * -1
 
   const maskStyle = {
     transition: 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)',
@@ -40,7 +40,7 @@ export default function Title({ title }: { title: string }): React.JSX.Element {
 
   return (
     <div
-      className="cursor-pointer relative text-6xl lg:text-[80px]"
+      className="cursor-pointer relative text-6xl"
       onMouseMove={onMouseMove}
       onMouseOut={onMouseOut}
       ref={titleRef}

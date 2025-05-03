@@ -25,7 +25,7 @@ export default function HowToPlay() {
     <Popover open={showInstructions} onOpenChange={setShowInstructions}>
       <PopoverTrigger asChild>
         <Button aria-label="How to play" variant="ghost">
-          <Lightbulb />
+          <Lightbulb className="text-indigo-500 size-6" size={24} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="bg-white dark:bg-zinc-800 p-4 rounded-md shadow-md w-72">

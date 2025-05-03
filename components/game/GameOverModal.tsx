@@ -13,7 +13,7 @@ export function GameOverModal() {
   const { gameOver, resetGame, startGame, gameLevel } = useGameContext()
   return (
     <Dialog open={gameOver} onOpenChange={resetGame}>
-      <DialogContent className="bg-orange-50 dark:bg-zinc-700">
+      <DialogContent className="bg-orange-50 dark:bg-zinc-700 md:w-[400px]">
         <DialogHeader className="flex flex-row items-center gap-4">
           <DialogTitle>Game over</DialogTitle>
         </DialogHeader>

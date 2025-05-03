@@ -6,25 +6,25 @@ export function GameScore() {
   const { score } = useGameContext()
   const [prevScore, setPrevScore] = useState(score)
   const [isAnimating, setIsAnimating] = useState(false)
-  const [scoreChange, setScoreChange] = useState(0) 
+  const [scoreChange, setScoreChange] = useState(0)
 
   useEffect(() => {
     const increase = score - prevScore
     if (increase > 0) {
-        setScoreChange(increase)
-        setPrevScore(score)
-        setIsAnimating(true)
-        const timer = setTimeout(() => {
-          setIsAnimating(false)
-        }, 500)
+      setScoreChange(increase)
+      setPrevScore(score)
+      setIsAnimating(true)
+      const timer = setTimeout(() => {
+        setIsAnimating(false)
+      }, 500)
 
-        return () => clearTimeout(timer)
-      }
+      return () => clearTimeout(timer)
+    }
   }, [score])
 
   return (
     <div className="relative h-16 flex items-center justify-center">
-      <div className="text-indigo-500 dark:text-amber-200 text-4xl leading-normal font-bold text-center">
+      <div className="text-indigo-400 dark:text-amber-200 text-6xl leading-normal font-bold text-center">
         <AnimatePresence>
           <motion.div
             key={score}
@@ -47,7 +47,7 @@ export function GameScore() {
       <AnimatePresence>
         {isAnimating && (
           <motion.div
-            className="absolute -top-6 text-amber-500 font-bold"
+            className="absolute -top-10 text-amber-500 font-bold md:text-2xl"
             initial={{ opacity: 0, y: 0 }}
             animate={{ opacity: 1, y: -10 }}
             exit={{ opacity: 0 }}

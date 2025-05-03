@@ -52,7 +52,7 @@ export default function GameCanvas() {
 
   return (
     <div
-      className="w-full md:w-1/2 flex justify-center md:justify-end p-4 md:p-6"
+      className="self-center flex justify-center items-center"
       ref={canvasRef}
     >
       <div

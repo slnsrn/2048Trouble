@@ -548,10 +548,10 @@ loose-envify@^1.4.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-lucide-react@^0.503.0:
-  version "0.503.0"
-  resolved "https://registry.npmjs.org/lucide-react/-/lucide-react-0.503.0.tgz"
-  integrity sha512-HGGkdlPWQ0vTF8jJ5TdIqhQXZi6uh3LnNgfZ8MHiuxFfX3RZeA79r2MW2tHAZKlAVfoNE8esm3p+O6VkIvpj6w==
+lucide-react@^0.507.0:
+  version "0.507.0"
+  resolved "https://registry.npmjs.org/lucide-react/-/lucide-react-0.507.0.tgz"
+  integrity sha512-XfgE6gvAHwAtnbUvWiTTHx4S3VGR+cUJHEc0vrh9Ogu672I1Tue2+Cp/8JJqpytgcBHAB1FVI297W4XGNwc2dQ==
 
 motion-dom@^12.9.4:
   version "12.9.4"
