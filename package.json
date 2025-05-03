@@ -1,7 +1,7 @@
 {
   "name": "2048Trouble",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "A unique twist on the classic 2048 puzzle game.",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
@@ -40,5 +40,8 @@
     "tailwindcss": "^4.1.5",
     "tw-animate-css": "^1.2.8",
     "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": "20.14.0"
   }
 }

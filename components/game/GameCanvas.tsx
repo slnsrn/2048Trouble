@@ -28,7 +28,7 @@ export default function GameCanvas() {
           // Check if this position didn't exist or had a different value before
           let foundInPrevious = false
           for (let key in previousGameState) {
-             // @ts-ignore
+            // @ts-ignore
             if (previousGameState[key] === gameState[pos]) {
               foundInPrevious = true
               break
