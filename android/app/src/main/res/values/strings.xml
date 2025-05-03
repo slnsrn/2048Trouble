@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">2048Trouble</string>
+    <string name="title_activity_main">2048Trouble</string>
+    <string name="package_name">com.slnsrn.trouble</string>
+    <string name="custom_url_scheme">com.slnsrn.trouble</string>
+</resources>

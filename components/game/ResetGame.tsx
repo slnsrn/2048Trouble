@@ -9,14 +9,15 @@ import {
   DialogTrigger,
 } from '../ui/dialog'
 import { useGameContext } from './GameContext'
+import { Level } from '@/lib/trouble'
 
 export function ResetGame() {
   const [isOpen, setIsOpen] = useState(false)
-  const { gameOn, resetGame } = useGameContext()
+  const { gameOn, startGame, gameLevel, resetGame } = useGameContext()
 
-  const handleReset = () => {
+  const handleReset = (level?: Level) => {
     setIsOpen(false)
-    resetGame()
+    level ? startGame(level) : resetGame()
   }
 
   return (
@@ -34,8 +35,11 @@ export function ResetGame() {
           <Button onClick={() => setIsOpen(false)} variant="tertiary">
             Cancel
           </Button>
-          <Button onClick={handleReset} variant="secondary">
-            Ok
+          <Button onClick={() => handleReset(gameLevel)} variant="secondary">
+            Restart
+          </Button>
+          <Button onClick={() => handleReset()} variant="destructive">
+            Reset
           </Button>
         </DialogFooter>
       </DialogContent>

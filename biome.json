@@ -5,7 +5,14 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": ["node_modules/**/*", "dist/**/*", ".next/**/*"]
+    "ignore": [
+      "node_modules/**/*",
+      "dist/**/*",
+      ".next/**/*",
+      "ios/**/*",
+      "android/**/*",
+      "out/**/*"
+    ]
   },
   "linter": {
     "enabled": true,
