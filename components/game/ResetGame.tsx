@@ -24,7 +24,7 @@ export function ResetGame() {
       <DialogTrigger asChild>
         <Button disabled={!gameOn}>Reset Game</Button>
       </DialogTrigger>
-      <DialogContent className="bg-zinc-100 dark:bg-zinc-700 max-w-xs">
+      <DialogContent className="bg-orange-50 dark:bg-zinc-700 max-w-xs">
         <DialogHeader className="flex flex-row items-center gap-4">
           <DialogTitle>Do you want to end the ongoing game?</DialogTitle>
         </DialogHeader>
