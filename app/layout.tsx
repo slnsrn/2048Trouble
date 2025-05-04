@@ -38,7 +38,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
       </head>
-      <body>
+      <body className='overflow-hidden'>
         {children}
 
         {/* Hidden SEO content - visible to search engines but not to users */}

@@ -40,7 +40,7 @@ export default function Title({ title }: { title: string }): React.JSX.Element {
 
   return (
     <div
-      className="cursor-pointer relative text-4xl md:text-6xl"
+      className="cursor-pointer relative text-3xl md:text-6xl"
       onMouseMove={onMouseMove}
       onMouseOut={onMouseOut}
       ref={titleRef}

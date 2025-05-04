@@ -59,14 +59,14 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
   const [previousGameState, setPreviousGameState] = useState<GameState | null>(
     null
   )
-  const [gameOn, setGameOn] = useState<boolean>(false)
-  const [gameOver, setGameOver] = useState<boolean>(false)
-  const [addNew, setAddNew] = useState<boolean>(false)
+  const [gameOn, setGameOn] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
+  const [addNew, setAddNew] = useState(false)
   const [gameLevel, setGameLevel] = useState<Level | undefined>(undefined)
-  const [panning, setPanning] = useState<boolean>(false)
+  const [panning, setPanning] = useState(false)
   const canvasRef = useRef<CanvasRefWithPosition>(null)
 
-  const SCORE = useRef<number>(0)
+  const SCORE = useRef(0)
 
   useEffect(() => {
     if (addNew) {
@@ -81,13 +81,13 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
         setGameOn(false)
       }, 500)
     }
-  }, [addNew, gameState])
+  }, [addNew])
 
-  const getRandomCell = (): Partial<GameState> => {
+  const getRandomCell = () => {
     const emptyCells = FILLABLE_CELLS.filter((cell) => !gameState[cell])
     const cell = emptyCells[getRandomInt(emptyCells.length)]
 
-    return { [cell]: NEW_VALUE_POOL[getRandomInt(100)] } as Partial<GameState>
+    return { [cell]: NEW_VALUE_POOL[getRandomInt(100)] }
   }
 
   const moveOnKeyPressed = useCallback(
@@ -162,9 +162,9 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     return () =>
       document?.body?.removeEventListener(
         'touchmove',
-        preventTouchmoveWhenPanning as EventListener
+        preventTouchmoveWhenPanning
       )
-  }, [panning])
+  }, [preventTouchmoveWhenPanning])
 
   useEffect(() => {
     if (canvasRef.current === null) return
@@ -179,7 +179,7 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
         canvasRef.current.removeEventListener('touchend', onTouchEnd, false)
       }
     }
-  }, [gameOn])
+  }, [canvasRef, onTouchStart, onTouchEnd])
 
   const getGameSetWithLevel = (level: Level): GameState => {
     const set = createGameSet(level)
@@ -190,7 +190,7 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     }
   }
 
-  const getDefaultGameSet = (): Partial<GameState> => {
+  const getDefaultGameSet = () => {
     const cell1 = getRandomCell()
     const cell2 = getRandomCell()
     return { ...cell1, ...cell2 }
@@ -211,7 +211,7 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     setGameOn(true)
   }
 
-  const resetGame = (): void => {
+  const resetGame = () => {
     setGameState(INITIAL_STATE)
     setPreviousGameState(null)
     setGameOn(false)
@@ -229,7 +229,7 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     const diffY = Math.abs(startY - endY)
     const diffX = Math.abs(startX - endX)
 
-    if (diffX < 5 && diffY < 5) return undefined
+    if (diffX < 5 && diffY < 5) return
 
     if (diffY > diffX) {
       //moves in vertical
@@ -256,21 +256,13 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     const rowCheck = ROWS.some((row) =>
-      row.some(
-        (cell, i) =>
-          i < row.length - 1 &&
-          set[cell as keyof GameState] === set[row[i + 1] as keyof GameState]
-      )
+      row.some((cell, i) => set[cell] === set[row[i + 1]])
     )
 
     if (rowCheck) return false
 
     return !COLUMNS.some((column) =>
-      column.some(
-        (cell, i) =>
-          i < column.length - 1 &&
-          set[cell as keyof GameState] === set[column[i + 1] as keyof GameState]
-      )
+      column.some((cell, i) => set[cell] === set[column[i + 1]])
     )
   }
 
@@ -354,23 +346,23 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({
     return updatedCells
   }
 
-  const moveLeft = (): Partial<GameState> => {
+  const moveLeft = () => {
     return moveForwards(ROWS)
   }
 
-  const moveUp = (): Partial<GameState> => {
+  const moveUp = () => {
     return moveForwards(COLUMNS)
   }
 
-  const moveRight = (): Partial<GameState> => {
+  const moveRight = () => {
     return moveBackwards(ROWS)
   }
 
-  const moveDown = (): Partial<GameState> => {
+  const moveDown = () => {
     return moveBackwards(COLUMNS)
   }
 
-  const handleMove = (direction: Direction): void => {
+  const handleMove = (direction: Direction) => {
     let updatedCells: Partial<GameState> = {}
     switch (direction) {
       case Direction.RIGHT:

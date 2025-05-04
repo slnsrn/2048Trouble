@@ -23,7 +23,7 @@ export function GameScore() {
   }, [score])
 
   return (
-    <div className="relative h-16 flex items-center justify-center">
+    <div className="relative flex items-center justify-center">
       <div className="text-secondary dark:text-amber-200  text-3xl md:text-6xl leading-normal font-bold text-center">
         <AnimatePresence>
           <motion.div
@@ -47,7 +47,7 @@ export function GameScore() {
       <AnimatePresence>
         {isAnimating && (
           <motion.div
-            className="absolute -top-10 text-accent font-bold text-lg md:text-2xl"
+            className="absolute -top-6 md:-top-10 text-accent font-bold text-lg md:text-2xl"
             initial={{ opacity: 0, y: 0 }}
             animate={{ opacity: 1, y: -10 }}
             exit={{ opacity: 0 }}
