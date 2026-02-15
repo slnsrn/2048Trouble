@@ -79,6 +79,24 @@ export const NEW_VALUE_POOL = [
   ...Array.from({ length: 15 }, () => 4),
 ]
 
+const TILE_BG_CLASSES = [
+  '',
+  'bg-tile1',
+  'bg-tile2',
+  'bg-tile3',
+  'bg-tile4',
+  'bg-tile5',
+  'bg-tile6',
+  'bg-tile7',
+  'bg-tile8',
+  'bg-tile9',
+  'bg-tile10',
+  'bg-tile11',
+  'bg-tile12',
+  'bg-tile13',
+  'bg-tile14',
+] as const
+
 /**
  * Generates tailwind color classes based on the tile number
  * @param {number} value - The number on the tile
@@ -96,9 +114,11 @@ export const getTileColorClasses = (value: number) => {
   // Text color changes based on background brightness
   const textColor = power <= 2 ? 'text-tile-text' : 'text-white'
 
-  // Use a switch statement to assign colors from yellow -> amber -> orange -> red
-  // with better differentiation between high values
-  return `bg-tile${power} ${textSize} ${textColor}`
+  // Keep class names static for Tailwind v4 content detection.
+  const tileIndex = Math.min(Math.max(power, 1), TILE_BG_CLASSES.length - 1)
+  const bgClass = TILE_BG_CLASSES[tileIndex]
+
+  return `${bgClass} ${textSize} ${textColor}`
 }
 
 export enum Direction {
