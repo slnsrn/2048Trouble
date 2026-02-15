@@ -3,7 +3,7 @@ const path = require('path')
 
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export', // Changed from 'standalone' to 'export' for Capacitor compatibility
+  output: 'export',
   webpack: (config) => {
     // Add support for path aliases
     config.resolve.alias = {
